@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "daisyui": "^2.37.0",
     "sass": "^1.55.0",
     "sass-loader": "^13.1.0",
     "vue": "^3.2.41"
