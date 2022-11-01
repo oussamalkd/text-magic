@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import Collapse from "./components/Collapse.vue"
 import Modal from "./components/Modal.vue"
-import Specification from "./types/Specification"
+import Specification from "./types/index"
 
 
 const header = ref<Array<Specification>>([]) 
@@ -28,10 +28,6 @@ const specifications = ref([
 const newItem = ref("")
 const priority = ref(false)
 
-const test = () => { console.log('test');
-}
-
-onMounted(test)
 
 </script>
 
