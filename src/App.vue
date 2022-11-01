@@ -1,17 +1,51 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
+import { onMounted, ref } from 'vue'
+import Collapse from "./components/Collapse.vue"
+import Modal from "./components/Modal.vue"
+import Specification from "./types/Specification"
+
+
+const header = ref<Array<Specification>>([]) 
+
+const specifications = ref([
+  {
+    id: 1,
+    name: "Sport",
+    options: {
+      engine: "V6 3.5 L",
+      color: "white"
+    }
+  },
+  {
+    id: 2,
+    name: "Comfort",
+    options: {
+      engine: "V6 3.9 L",
+      color: "Black"
+    }
+  },
+]);
+const newItem = ref("")
+const priority = ref(false)
+
+const test = () => { console.log('test');
+}
+
+onMounted(test)
 
 </script>
 
 <template>
-  <div class="bg-blue-900 w-full h-screen">
-    <h1>Hello WOrrrld</h1>
+  <div class="bg-gray-100 text-gray-800 w-full h-screen flex justify-center items-center">
+    <div class="content w-full px-10 lg:w-4/12 mx-auto">
+      <Modal />
+      <Collapse v-for="spec in specifications" :key="spec.id"
+        :title="spec.name"
+        :options="spec.options"
+      />
+      <div class="w-full">
+        <label for="my-modal" class="btn btn-primary w-full">+ Make new specification</label>
+      </div>
+    </div>
   </div>
 </template>
-
-<style scoped>
-#app {
-  @apply w-full h-screen
-}
-</style>
