@@ -11,11 +11,11 @@ const getSpecifications = computed((): Array<Specification> => {
   return store.state.specifications
 })
 
-// not used
+// not used yet 
 const getInfo = computed((): string => {
   return store.getters.getSpecificationInfo
 })
-// not used
+// not used yet
 const setvalue = () => {
   store.commit(SpecificationMutation.SET_NAME, "Oussa")
   store.dispatch("loadData")
