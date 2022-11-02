@@ -1,10 +1,15 @@
-import App from '../App.vue'
+import Vue from 'vue'
 import Vuex, { StoreOptions } from "vuex"
+import { RootState } from "./types"
+import { specification } from './specification/index'
 
-App.use(Vuex)
-const store: StoreOptions<any> = {
-    state: {},
-    modules: {}
+const store: StoreOptions<RootState> = {
+    state: {
+        specifications: []
+    },
+    modules: {
+        specification
+    }
 }
 
-export default new Vuex.Store()
+export default new Vuex.Store<RootState>(store)

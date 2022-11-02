@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue"
+import store from "../store"
 import { Engine, Materials, Color, WheelRims, WheelsType } from "../types"
 const specificationName = ref('')
 const airSuspansiion = ref(false)
@@ -54,25 +55,23 @@ const clearData = (): void => {
     signatureOnHood.value = ""
 }
 
-const emit = defineEmits(['add'])
 
 const onSave = () => {
     const specification = {
-        id: 333,
+        id: store.state.specifications.length + 1,
         name: specificationName.value,
         options: {
             engine: selectedEngine.value,
             materials: selectedMaterial.value,
             color: selectedColor.value,
             wheelRims: selectedWheelRims.value,
-            wheelsType: seelctedWheelType.value,
+            wheelsType: selctedWheelType.value,
             airSuspension: airSuspansiion.value,
             signatorOnHood: signatureOnHood.value
         }
     }
-    emit("add", specification)
+    store.state.specifications.push(specification)
     clearData()
-    isOpen.value = false
 }
 
 </script>
