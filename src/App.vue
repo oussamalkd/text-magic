@@ -5,9 +5,9 @@ import Modal from "./components/Modal.vue"
 import Specification from "./types/index"
 
 
-const header = ref<Array<Specification>>([]) 
+const specifications = ref<Array<Specification>>([]) 
 
-const specifications = ref([
+const specificationsd = ref([
   {
     id: 1,
     name: "Sport",
@@ -28,13 +28,20 @@ const specifications = ref([
 const newItem = ref("")
 const priority = ref(false)
 
+const addSpecification = (spec: Specification) => {
+  console.log(spec);
+  
+  specifications.value.push(spec)
+  
+}
+
 
 </script>
 
 <template>
   <div class="bg-gray-100 text-gray-800 w-full h-screen flex justify-center items-center">
     <div class="content w-full px-10 lg:w-4/12 mx-auto">
-      <Modal />
+      <Modal @add="addSpecification" />
       <Collapse v-for="spec in specifications" :key="spec.id"
         :title="spec.name"
         :options="spec.options"

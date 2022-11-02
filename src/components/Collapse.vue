@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue"
 const props = defineProps({title:String, options: Object})
 </script>
 <template>
@@ -10,7 +11,7 @@ const props = defineProps({title:String, options: Object})
         <div class="collapse-content bg-primary text-primary-content peer-checked:bg-base-content peer-checked:text-secondary-content"> 
             <ul class="menu">
                 <li v-for="(key, value, index) in props.options" :key="index">
-                    <a href="#">{{value}} : {{key}}</a>
+                    {{value}} : {{key}}
                 </li>
             </ul>
         </div>
