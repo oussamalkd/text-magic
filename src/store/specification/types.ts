@@ -1,13 +1,16 @@
+export interface NewOption {
+    [key: string]: any,
+}
+
 export interface Specification {
-    id: number,
-    name: string,
-    options?: {
-        engine: Engine,
-        materials: Materials,
-        color: Color,
-        wheelRims: WheelRims,
-        wheelsType: WheelsType,
-        airSuspension: boolean,
-        signatorOnHood: SignatorOnHood
-    }
+    id?: number,
+    name?: string,
+    engine?: string,
+    materials?: string,
+    color?: string,
+    wheelRims?: string,
+    wheelsType?: string,
+    airSuspension?: boolean,
+    signatorOnHood?: string
+    newOption?: Array<NewOption>
 }

@@ -2,29 +2,35 @@
 import { ref, reactive, onMounted } from "vue"
 import router from "../router";
 import store from "../store"
-import { Engine, Materials, Color, WheelRims, WheelsType } from "../types"
-const specificationName = ref('')
-const airSuspansiion = ref(false)
-const signatureOnHood = ref('')
-const selectedEngine = ref('Engine')
-const selectedMaterial = ref('Interior materials')
-const selectedColor = ref('Color')
-const selectedWheelRims = ref('Wheel rims')
-const selctedWheelType = ref('Type of wheels')
-//data
-const isOpen = ref(false)
-const engines = reactive<Array<Engine>>(
+import Modal from "../components/Modal.vue";
+import { Specification, NewOption } from "../store/specification/types"
+
+const specification: Specification = reactive({
+    id: store.state.specifications.length + 1,
+    name: '',
+    engine: 'Engine',
+    materials: 'Interior materials',
+    color: 'Color',
+    wheelRims: 'Wheel rims',
+    wheelsType: 'Type of wheels',
+    airSuspension: false,
+    signatorOnHood: '',
+    newOption: []
+})
+const newOption: NewOption = {}
+// local data
+const engines = ref(
     [
         { id: 1, label: 'V6 3.5 L' },
         { id: 2, label: 'V7 4.8 L'}
     ])
-const materials = reactive<Array<Materials>>(
+const materials = ref(
     [
         { id: 1, label: 'Leather' },
         { id: 2, label: 'Vinyl'},
         { id: 3, label: 'Polyseter'}
     ])
-const colors = reactive<Array<Color>>(
+const colors = ref(
     [
         { id: 1, label: 'White' },
         { id: 2, label: 'Black'},
@@ -32,98 +38,106 @@ const colors = reactive<Array<Color>>(
         { id: 4, label: 'Navy'},
     ])
 
-const wheelsReem = reactive<Array<WheelRims>>(
+const wheelsReem = ref(
     [
         { id: 1, label: '20 inches' },
         { id: 2, label: '25 inches'},
         { id: 3, label: '30 inches'},
     ])
-const wheelsType = reactive<Array<WheelsType>>(
+const wheelsType = ref(
     [
         { id: 1, label: 'Alloy' },
         { id: 2, label: 'Steel'},
         { id: 3, label: 'Forged'},
     ])
-
+// clear all fields
 const clearData = (): void => {
-    specificationName.value = ""
-    selectedEngine.value = "Engine"
-    selectedMaterial.value = "Interior materials"
-    selectedColor.value = "Color"
-    selectedWheelRims.value = "Wheel Rims"
-    selctedWheelType.value =  "Type of wheels"
-    airSuspansiion.value = false
-    signatureOnHood.value = ""
+    specification.name = ''
+    specification.engine = "Engine"
+    specification.materials ="Interior materials"
+    specification.color = "Color"
+    specification.wheelRims = "Wheel rims"
+    specification.wheelsType = "Type of wheels"
+    specification.airSuspension = false
+    specification.signatorOnHood = ""
 }
 
-
+// on save event
 const onSave = () => {
-    const specification = {
-        id: store.state.specifications.length + 1,
-        name: specificationName.value,
-        options: {
-            engine: selectedEngine.value,
-            materials: selectedMaterial.value,
-            color: selectedColor.value,
-            wheelRims: selectedWheelRims.value,
-            wheelsType: selctedWheelType.value,
-            airSuspension: airSuspansiion.value,
-            signatorOnHood: signatureOnHood.value
-        }
-    }
     store.state.specifications.push(specification)
-    clearData()
     router.push({name: "home"})
 }
+
+// get new option if was added and set a value for it
+const getNewOption = (option: NewOption) => {
+    newOption.label = option.label
+    newOption.value = ""
+    specification.newOption?.push(newOption)
+}
+
+// set the fields as default values
+onMounted(clearData)
 
 </script>
 
 <template>
     <div class="add w-full h-screen flex justify-center items-center">
+        <Modal @save="getNewOption" />
         <form @submit.prevent="onSave()" class="form-control w-full max-w-xl">
 
             <label class="label">
                 <span class="label-text">Name of specification</span>
             </label>
-            <input v-model="specificationName" type="text" name="specification-name" class="input input-bordered">
+            <input v-model="specification.name" type="text" name="specification-name" class="input input-bordered input-primary">
 
-            <select v-model="selectedEngine" class="drop-down">
+            <select v-model="specification.engine" class="drop-down">
                 <option disabled selected>Engine</option>
                 <option v-for="eng in engines" :key="eng.id">{{eng.label}}</option>
             </select>
 
-            <select v-model="selectedMaterial" class="drop-down">
+            <select v-model="specification.materials" class="drop-down">
                 <option disabled selected>Interior materials</option>
                 <option v-for="matrial in materials" :key="matrial.id">{{matrial.label}}</option>
             </select>
 
-            <select v-model="selectedColor" class="drop-down">
+            <select v-model="specification.color" class="drop-down">
                 <option disabled selected>Color</option>
                 <option v-for="color in colors" :key="color.id">{{color.label}}</option>
             </select>
 
-            <select v-model="selectedWheelRims" class="drop-down">
+            <select v-model="specification.wheelRims" class="drop-down">
                 <option disabled selected>Wheel rims</option>
                 <option v-for="wReem in wheelsReem" :key="wReem.id">{{wReem.label}}</option>
             </select>
 
-            <select v-model="selctedWheelType" class="drop-down">
+            <select v-model="specification.wheelsType" class="drop-down">
                 <option disabled selected>Type of wheels</option>
                 <option v-for="wType in wheelsType" :key="wType.id">{{wType.label}}</option>
             </select>
 
-            <label class="label cursor-pointer w-4/12">
-                <input v-model="airSuspansiion" type="checkbox" class="checkbox checkbox-primary" />
+            <label class="label cursor-pointer w-3/12">
+                <input v-model="specification.airSuspension" type="checkbox" class="checkbox checkbox-primary" />
                 <span class="label-text">Air suspansion</span>
             </label>
 
             <label class="label">
                 <span class="label-text">Signature on hood</span>
             </label>
-            <input v-model="signatureOnHood" type="text" name="signature-hood" class="input input-bordered">
+            <input v-model="specification.signatorOnHood" type="text" name="signature-hood" class="input input-bordered input-primary">
+
+            <div v-if="specification.newOption?.length !==0"
+                v-for="newOption in specification.newOption"
+                class="w-full new-options form-control"
+            >
+                <label class="label">
+                    {{newOption.label}}
+                </label>
+                <input v-model="newOption.value" type="text" :name="newOption.label" class="input input-bordered input-primary" />
+            </div>
+
 
             <div class="footer-content">
-                <button> + new configuration option</button>
+                <label for="my-modal"> + new configuration option</label>
                 <input type="submit" value="Save" />
             </div>
         </form>
@@ -143,9 +157,6 @@ const onSave = () => {
         @apply w-full flex justify-between items-center my-5;
         * {
             @apply btn btn-primary max-w-md;
-        }
-        label {
-            @apply btn-ghost;
         }
     }
 }

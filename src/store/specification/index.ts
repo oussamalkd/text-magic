@@ -1,10 +1,8 @@
 import { Module } from "vuex";
 import { RootState } from "../types";
 import { Specification } from "./types";
-import { getters } from "./getters";
-import { mutations } from "./mutations";
-import { actions } from "./actions";
 
+// test
 const state: Specification = {
     id: 1,
     name: "Sport"
@@ -12,7 +10,4 @@ const state: Specification = {
 
 export const specification: Module<Specification, RootState> = {
     state,
-    getters,
-    mutations,
-    actions
 }
