@@ -5,8 +5,7 @@
           <span>No specification found</span>
         </div>
         <Collapse v-else v-for="spec in getSpecifications" :key="spec.id"
-          :title="spec.name"
-          :options="spec.options"
+          :spec="spec"
         />
         <div class="w-full">
           <router-link to="/add" class="btn btn-primary w-full">+ Make new specification</router-link>
@@ -15,27 +14,13 @@
     </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref, computed } from 'vue'
+import { computed } from 'vue'
 import Collapse from "../components/Collapse.vue"
-import Modal from "../components/Modal.vue"
-import router from '../router'
 import store from '../store'
-import { SpecificationMutation } from '../store/specification/mutations'
-import Specification from "../types/index"
+import { Specification } from "../store/specification/types"
 
 
 const getSpecifications = computed((): Array<Specification> => {
   return store.state.specifications
 })
-
-// not used yet 
-const getInfo = computed((): string => {
-  return store.getters.getSpecificationInfo
-})
-// not used yet
-const setvalue = () => {
-  store.commit(SpecificationMutation.SET_NAME, "Oussa")
-  store.dispatch("loadData")
-}
-onMounted(setvalue)
 </script>

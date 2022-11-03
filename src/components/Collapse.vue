@@ -1,35 +1,43 @@
 <script setup lang="ts">
 import { ref } from "vue"
-const props = defineProps({title:String, options: Object})
+import { Specification } from "../store/specification/types"
+const props = defineProps<{
+    spec: Specification
+    }>()
 </script>
 <template>
     <div class="collapse collapse-arrow bg-base-100 text-base-content rounded-box my-2">
         <input type="checkbox" class="peer" /> 
         <div class="collapse-title text-xl font-semibold peer-checked:bg-base-content peer-checked:text-secondary-content">
-            {{props.title}}
+            {{spec.name}}
         </div>
         <div class="collapse-content bg-primary text-primary-content peer-checked:bg-base-content peer-checked:text-secondary-content"> 
             <ul class="menu">
                 <li>
-                    Engine - {{options?.engine}}
+                    Engine - {{spec.engine}}
                 </li>
                 <li>
-                    Interior Material {{options?.materials}}
+                    Interior Material {{spec.materials}}
                 </li>
                 <li>
-                    Color - {{options?.color}}
+                    Color - {{spec.color}}
                 </li>
                 <li>
-                    Wheel rims - {{options?.wheelRims}}
+                    Wheel rims - {{spec.wheelRims}}
                 </li>
                 <li>
-                    Type of wheels - {{options?.wheelsType}}
+                    Type of wheels - {{spec.wheelsType}}
                 </li>
                 <li>
-                    Air suspension - {{options?.airSuspension ? "Yes" : "No"}}
+                    Air suspension - {{spec.airSuspension ? "Yes" : "No"}}
                 </li>
                 <li>
-                    Signature on hood - {{options?.signatorOnHood}}
+                    Signature on hood - {{spec.signatorOnHood}}
+                </li>
+                <li v-if="spec.newOption?.length !==0"
+                    v-for="opt in spec.newOption"
+                >
+                    {{opt.label}} - {{ opt.value}}
                 </li>
             </ul>
         </div>
