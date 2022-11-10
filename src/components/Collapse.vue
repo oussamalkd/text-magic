@@ -6,6 +6,7 @@ const props = defineProps<{
     }>()
 </script>
 <template>
+    <RouterLink to="edit/1">
     <div class="collapse collapse-arrow bg-base-100 text-base-content rounded-box my-2">
         <input type="checkbox" class="peer" /> 
         <div class="collapse-title text-xl font-semibold peer-checked:bg-base-content peer-checked:text-secondary-content">
@@ -42,4 +43,5 @@ const props = defineProps<{
             </ul>
         </div>
     </div>
+    </RouterLink>
 </template>
