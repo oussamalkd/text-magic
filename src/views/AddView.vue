@@ -5,8 +5,9 @@ import store from "../store"
 import Modal from "../components/Modal.vue";
 import { Specification, NewOption } from "../store/specification/types"
 
+// default
 const specification: Specification = reactive({
-    id: store.state.specifications.length + 1,
+    id:store.state.specifications.length + 1,
     name: '',
     engine: 'Engine',
     materials: 'Interior materials',
@@ -18,38 +19,7 @@ const specification: Specification = reactive({
     newOption: []
 })
 const newOption: NewOption = {}
-// local data
-const engines = ref(
-    [
-        { id: 1, label: 'V6 3.5 L' },
-        { id: 2, label: 'V7 4.8 L'}
-    ])
-const materials = ref(
-    [
-        { id: 1, label: 'Leather' },
-        { id: 2, label: 'Vinyl'},
-        { id: 3, label: 'Polyseter'}
-    ])
-const colors = ref(
-    [
-        { id: 1, label: 'White' },
-        { id: 2, label: 'Black'},
-        { id: 3, label: 'Green'},
-        { id: 4, label: 'Navy'},
-    ])
 
-const wheelsReem = ref(
-    [
-        { id: 1, label: '20 inches' },
-        { id: 2, label: '25 inches'},
-        { id: 3, label: '30 inches'},
-    ])
-const wheelsType = ref(
-    [
-        { id: 1, label: 'Alloy' },
-        { id: 2, label: 'Steel'},
-        { id: 3, label: 'Forged'},
-    ])
 // clear all fields
 const clearData = (): void => {
     specification.name = ''
@@ -60,6 +30,7 @@ const clearData = (): void => {
     specification.wheelsType = "Type of wheels"
     specification.airSuspension = false
     specification.signatorOnHood = ""
+    specification.newOption = []
 }
 
 // on save event
@@ -92,27 +63,27 @@ onMounted(clearData)
 
             <select v-model="specification.engine" class="drop-down">
                 <option disabled selected>Engine</option>
-                <option v-for="eng in engines" :key="eng.id">{{eng.label}}</option>
+                <option v-for="eng in store.state.engines" :key="eng.id">{{eng.label}}</option>
             </select>
 
             <select v-model="specification.materials" class="drop-down">
                 <option disabled selected>Interior materials</option>
-                <option v-for="matrial in materials" :key="matrial.id">{{matrial.label}}</option>
+                <option v-for="matrial in store.state.materials" :key="matrial.id">{{matrial.label}}</option>
             </select>
 
             <select v-model="specification.color" class="drop-down">
                 <option disabled selected>Color</option>
-                <option v-for="color in colors" :key="color.id">{{color.label}}</option>
+                <option v-for="color in store.state.colors" :key="color.id">{{color.label}}</option>
             </select>
 
             <select v-model="specification.wheelRims" class="drop-down">
                 <option disabled selected>Wheel rims</option>
-                <option v-for="wReem in wheelsReem" :key="wReem.id">{{wReem.label}}</option>
+                <option v-for="wReem in store.state.wheelRims" :key="wReem.id">{{wReem.label}}</option>
             </select>
 
             <select v-model="specification.wheelsType" class="drop-down">
                 <option disabled selected>Type of wheels</option>
-                <option v-for="wType in wheelsType" :key="wType.id">{{wType.label}}</option>
+                <option v-for="wType in store.state.wheelsTypes" :key="wType.id">{{wType.label}}</option>
             </select>
 
             <label class="label cursor-pointer w-3/12">
